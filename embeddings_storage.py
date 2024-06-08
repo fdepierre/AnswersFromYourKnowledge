@@ -13,3 +13,10 @@ class StoreEmbeddings:
             json_document = json.dumps(document)
             self.collection.add(ids=[str(i)], embeddings=[embedding], documents=[json_document])
         return self.collection
+
+
+    def find_closest_answer(self, query_embedding):
+        results = self.collection.query(query_embeddings=[query_embedding], n_results=1)
+        closest_document_json = results['documents'][0].pop()
+        closest_document = json.loads(closest_document_json)
+        return closest_document["question"], closest_document["answer"]

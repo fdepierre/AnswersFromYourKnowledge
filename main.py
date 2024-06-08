@@ -17,6 +17,7 @@ if __name__ == "__main__":
     collection = storage.store_embeddings(questions, embeddings, answers)
     
     user_question = "Qu'est ce que la culture agroforestière ?"
+    query_embedding = embedding_generator.get_query_embedding(user_question)
     
-    question, answer = embedding_generator.find_closest_answer(collection, user_question)
+    question, answer = storage.find_closest_answer(query_embedding)
     print("question utilisateur:", user_question, "question trouvée", question, "Réponse trouvée :", answer)

@@ -12,13 +12,9 @@ class EmbeddingsManagement:
             embeddings.append(response["embedding"])
         return embeddings 
 
+    def get_query_embedding(self, user_question):
+        response = ollama.embeddings(model=self.model_name, prompt=user_question)
+        return response["embedding"]
         
-    def find_closest_answer(self, collection, user_question):
-            response = ollama.embeddings(model=self.model_name, prompt=user_question)
-            query_embedding = response["embedding"]
-            results = collection.query(query_embeddings=[query_embedding], n_results=1)
-            closest_document_json = results['documents'][0].pop()
-            closest_document = json.loads(closest_document_json)
-            return closest_document["question"], closest_document["answer"]
         
         
